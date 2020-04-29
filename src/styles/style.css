@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css?family=Muli:400,500,600,700,800,900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap");
+
+/* Header */
+.logo {
+  width: 45px;
+}
+
+.gambar-berita {
+  width: 700px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+}
