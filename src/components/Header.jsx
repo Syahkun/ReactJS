@@ -82,7 +82,7 @@ class Header extends Component {
                 className="btn btn-outline-success my-2 my-sm-0"
                 type="submit"
               >
-                Search
+                <i className="fa fa-fw fa-search" aria-hidden="true"></i>
               </button>
             </form>
             <div
