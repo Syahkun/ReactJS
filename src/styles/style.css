@@ -2,9 +2,9 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap");
 
 /* Header */
-.logo {
+/* .logo {
   width: 45px;
-}
+} */
 
 .gambar-berita {
   width: 700px;
@@ -13,4 +13,9 @@
 .card-footer {
   display: flex;
   justify-content: space-between;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 12vmin;
 }

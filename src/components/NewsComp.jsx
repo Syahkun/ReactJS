@@ -1,26 +1,27 @@
-import React, { Component } from "react";
+import React from "react";
+import moment from "moment";
 
-class News extends Component {
-  render() {
-    return (
-      <div>
+const News = (props) => {
+  console.log("test lates news");
+  const { latest, publish } = props;
+  return (
+    <div>
+      {latest.slice(0, 10).map((element, index) => (
         <div className="card mb-3">
           <img
             className="card-img-top"
-            src={require("../images/gambar-berita.jpg")}
-            alt="Card image cap"
+            src={element.urlToImage}
+            alt="Card cap"
           />
           <div className="card-body">
             <h5 className="card-title">
-              Nikahi Rakyat Jelata, Putri Ayako dari Jepang Lepaskan Gelar
-              Kerajaan
+              <a href="{element.url}">{element.title}</a>
             </h5>
+            <p className="card-text">{element.description}</p>
             <p className="card-text">
-              Pernikahan Putri Ayako dan Kei Moriya dilangsungkan lewat upcara
-              tradisional Jepang.
-            </p>
-            <p className="card-text">
-              <small className="text-muted">Last updated 3 mins ago</small>
+              <small className="text-muted">
+                Last updated {moment({ publish }).fromNow()}
+              </small>
             </p>
           </div>
           <div className="card-footer">
@@ -29,9 +30,9 @@ class News extends Component {
             <i className="fa fa-thumbs-down mr-5"></i>
           </div>
         </div>
-      </div>
-    );
-  }
-}
+      ))}
+    </div>
+  );
+};
 
 export default News;

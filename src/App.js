@@ -1,12 +1,14 @@
 import React from "react";
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
-import Header from "./pages/Home";
+import Home from "./pages/Home";
+// import AxiosPage from "./pages/AxiosPage";
+// import Props from "./pages/Props";
 
 function App() {
   return (
     <div>
-      <Header />
+      <Home />
     </div>
   );
 }
