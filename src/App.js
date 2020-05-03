@@ -1,15 +1,16 @@
 import React from "react";
 // import logo from "./logo.svg";
+import MainRoutes from "./routes/MainRoutes";
 import "./App.css";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 // import AxiosPage from "./pages/AxiosPage";
 // import Props from "./pages/Props";
 
 function App() {
   return (
-    <div>
-      <Home />
-    </div>
+    <>
+      <MainRoutes />
+    </>
   );
 }
 
