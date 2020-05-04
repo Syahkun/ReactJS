@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Search from "./Search";
+import { connect } from "react-redux";
+import { doLogout } from "../store/actions/actionUser"
 
 class HeaderUser extends React.Component {
   login = JSON.parse(localStorage.getItem("is_login"));
@@ -16,9 +18,12 @@ class HeaderUser extends React.Component {
   };
 
   // function to do logout
-  postSignout = () => {
-    localStorage.removeItem("is_login");
-    this.props.history.push("/home");
+  postSignout = async () => {
+    await this.props.doLogout();
+    const is_login = this.props.logout;
+    if (!is_login){
+      this.props.history.push("/home");
+    }
   };
 
   render() {
@@ -121,7 +126,7 @@ class HeaderUser extends React.Component {
               </li>
             </ul>
             <Search {...this.props} />
-            {this.login ? (
+            {this.props.dataUser.is_login ? (
               <div
                 className="collapse navbar-collapse"
                 id="navbarSupportedContent"
@@ -169,4 +174,16 @@ class HeaderUser extends React.Component {
   }
 }
 
-export default HeaderUser;
+const mapStateToProps = (state) => {
+  return {
+    dataUser: state.user,
+    logout: state.user.is_login,
+  }
+}
+
+const mapDispatchToProps = {
+  
+  doLogout: doLogout,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (HeaderUser);

@@ -6,6 +6,8 @@ import News from "../components/NewsComp";
 import Berita from "../components/BeritaTerkini";
 import { Redirect } from "react-router-dom";
 
+import { connect } from "react-redux";
+
 //News Api
 const apiKey = "874c2936717449ac9fa8d4494e7fc947";
 const baseUrl = "https://newsapi.org/v2/";
@@ -125,7 +127,7 @@ class Home extends Component {
     });
     return (
       <div>
-        {is_login ? (
+        {this.props.dataUser.is_login? (
           <React.Fragment>
             <div>
               <Header
@@ -174,4 +176,12 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    dataUser: state.user,
+  }
+}
+
+export default connect(mapStateToProps) (Home);
+
+

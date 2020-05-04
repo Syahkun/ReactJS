@@ -2,43 +2,57 @@ import React, { Component } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import Header from "../components/Header";
+import { doLogin, changeInputUser } from "../store/actions/actionUser";
+
+//redux
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
 
 class SignIn extends Component {
-  state = { namaPengguna: "", kataKunci: "" };
+  // state = { namaPengguna: "", kataKunci: "" };
 
   //function to handle input user
-  changeInput = (el) => {
-    this.setState({ [el.target.name]: el.target.value });
-  };
+  // changeInput = (el) => {
+  //   this.setState({ [el.target.name]: el.target.value });
+  // };
 
   //function to do login
-  postLogin = () => {
-    const { namaPengguna, kataKunci } = this.state;
+  postLogin = async () => {
+    await this.props.doLogin();
+    const is_login = this.props.login;
+    if (is_login) {
+      this.props.history.push("/profile");
+    };
+  };
+    // const { namaPengguna, kataKunci } = this.state;
 
     //set data for body request
-    const data = {
-      username: namaPengguna,
-      password: kataKunci,
-    };
+    // const data = {
+    //   username: namaPengguna,
+    //   password: kataKunci,
+    // };
 
     //request data from API
-    axios
-      .post("https://syahkun.free.beeceptor.com/login", data)
-      .then((response) => {
-        if (response.data.hasOwnProperty("api_key")) {
-          localStorage.setItem("api_key", response.data.api_key);
-          localStorage.setItem("is_login", true);
-          localStorage.setItem("full_name", response.data.full_name);
-          localStorage.setItem("email", response.data.email);
-          this.props.history.push("/profile");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  //   axios
+  //     .post("https://syahkun.free.beeceptor.com/login", data)
+  //     .then((response) => {
+  //       if (response.data.hasOwnProperty("api_key")) {
+  //         localStorage.setItem("api_key", response.data.api_key);
+  //         localStorage.setItem("is_login", true);
+  //         localStorage.setItem("full_name", response.data.full_name);
+  //         localStorage.setItem("email", response.data.email);
+  //         this.props.history.push("/profile");
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // };
 
   render() {
+    console.warn("Cek own props", this.props);
+
     const message = this.props.location.state
       ? this.props.location.state.message
       : "Masukan Inputnya";
@@ -53,7 +67,7 @@ class SignIn extends Component {
                 type="text"
                 name="namaPengguna"
                 placeholder="Username"
-                onChange={(el) => this.changeInput(el)}
+                onChange={(el) => this.props.changeInput(el)}
                 required
               />
             </div>
@@ -62,7 +76,7 @@ class SignIn extends Component {
                 type="password"
                 name="kataKunci"
                 placeholder="Password"
-                onChange={(el) => this.changeInput(el)}
+                onChange={(el) => this.props.changeInput(el)}
                 required
               />
             </div>
@@ -96,4 +110,18 @@ class SignIn extends Component {
   }
 }
 
-export default withRouter(SignIn);
+const mapStateToProps = (state) => {
+  return {
+    namaPengguna: state.user.namaPengguna,
+    kataKunci: state.user.kataKunci,
+    login: state.user.is_login
+  };
+};
+
+const mapDispatchToProps = {
+  changeInput: (el) => changeInputUser(el),
+  doLogin: doLogin
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (SignIn);
+// export default withRouter(SignIn);

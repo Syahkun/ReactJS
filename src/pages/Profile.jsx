@@ -1,16 +1,17 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import Header from "../components/Header";
+import { connect } from "react-redux";
 
 const Profile = (props) => {
   //get data is_login, email and full_name from local storage
-  const is_login = JSON.parse(localStorage.getItem("is_login"));
-  const email = localStorage.getItem("email");
-  const full_name = localStorage.getItem("full_name");
+  // const is_login = JSON.parse(localStorage.getItem("is_login"));
+  // const email = localStorage.getItem("email");
+  // const full_name = localStorage.getItem("full_name");
 
   //set condition when status login == nul, redirect to signin and
   //show profile when is login is not null
-  if (is_login === null) {
+  if (!props.dataUser.is_login) {
     return (
       <Redirect
         to={{
@@ -32,10 +33,10 @@ const Profile = (props) => {
             Profile
           </h1>
           <p>
-            <label>Email:</label> {email}
+            <label>Email:</label> {props.dataUser.email}
           </p>
           <p>
-            <label>Full Name:</label> {full_name}
+            <label>Full Name:</label> {props.dataUser.full_name}
           </p>
         </section>
       </React.Fragment>
@@ -43,4 +44,11 @@ const Profile = (props) => {
   }
 };
 
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+    dataUser: state.user,
+  }
+}
+
+export default connect(mapStateToProps) (Profile);
+// export default Profile;
