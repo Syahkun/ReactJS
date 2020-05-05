@@ -8,9 +8,12 @@ import { Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
 
+//function import actions
+import { getListNews, handleInputChange,searchNews, getListNewsCategory } from "../store/actions/actionNews"
+
 //News Api
-const apiKey = "874c2936717449ac9fa8d4494e7fc947";
-const baseUrl = "https://newsapi.org/v2/";
+const apiKey = process.env.REACT_APP_API_KEY;
+const baseUrl = process.env.REACT_APP_BASE_URL;
 const urlLatestNews = baseUrl + "everything?q=bitcoin&apiKey=" + apiKey;
 const urlHeadline = baseUrl + "top-headlines?country=id&apiKey=" + apiKey;
 
@@ -28,7 +31,7 @@ class Home extends Component {
     console.log("response headline", response.data.articles);
     this.setState({ HeadlineNews: response.data.articles });
   };
-
+  getListNewsCategory
   getDatalatestNews = async () => {
     const response = await axios.get(urlLatestNews);
     console.log("response latest news", response.data.articles);
@@ -40,85 +43,87 @@ class Home extends Component {
     const paramCategory = await this.props.match.params.category;
 
     // get news from api
-    this.getNews(paramCategory);
-
+    this.props.getListNews( paramCategory)
+  
     this.getDataHeadline();
     this.getDatalatestNews();
   };
 
   //function get list news from api
-  getNews = async (category) => {
-    //set conditio if params url undefined
-    let urlHeadlineNews;
-    if (category) {
-      urlHeadlineNews = urlHeadline + "&category=" + category;
-    } else {
-      urlHeadlineNews = urlHeadline;
-    }
+  // getNews = async (category) => {
+  //   //set conditio if params url undefined
+  //   let urlHeadlineNews;
+  //   if (category) {
+  //     urlHeadlineNews = urlHeadline + "&category=" + category;
+  //   } else {
+  //     urlHeadlineNews = urlHeadline;
+  //   }
 
-    //activate loading
-    await this.setState({ isLoading: true });
+  //   //activate loading
+  //   await this.setState({ isLoading: true });
 
-    //request data from api
-    axios
-      .get(urlHeadlineNews)
-      .then((response) => {
-        this.setState({ listNews: response.data.articles, isLoading: false });
-      })
-      .catch((error) => {
-        this.setState({ isLoading: false });
-      });
-  };
+  //   //request data from api
+  //   axios
+  //     .get(urlHeadlineNews)
+  //     .then((response) => {
+  //       this.setState({ listNews: response.data.articles, isLoading: false });
+  //     })
+  //     .catch((error) => {
+  //       this.setState({ isLoading: false });
+  //     });
+  // };
 
   // function to handle input when change value on field search
-  handleInputChange = async (event) => {
-    let value = event.target.value;
-    await this.setState({ search: value });
-    this.searchNews(value);
-  };
+  // handleInputChange = async (event) => {
+  //   let value = event.target.value;
+  //   await this.setState({ search: value });
+  //   this.searchNews(value);
+  // };
 
-  // function to do search news when keyboard more than 3 digit
-  searchNews = async (keyword) => {
-    if (keyword.length > 1) {
-      //activate loading
-      await this.setState({ isLoading: true });
-      try {
-        const response = await axios.get(
-          baseUrl + "everything?q=" + keyword + "&apiKey=" + apiKey
-        );
-        this.setState({ listNews: response.data.articles, isLoading: false });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
+  // // function to do search news when keyboard more than 3 digit
+  // searchNews = async (keyword) => {
+  //   if (keyword.length > 1) {
+  //     //activate loading
+  //     await this.setState({ isLoading: true });
+  //     try {
+  //       const response = await axios.get(
+  //         baseUrl + "everything?q=" + keyword + "&apiKey=" + apiKey
+  //       );
+  //       this.setState({ listNews: response.data.articles, isLoading: false });
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  // };
 
   // function to change router and request news by category
   handleRequestCategoryNews = async (categoryName) => {
     // redirect pages to endpoint news-category
     await this.props.history.replace("/news-category/" + categoryName);
 
-    // activate loading
-    await this.setState({ isLoading: true });
+    // // activate loading
+    // await this.setState({ isLoading: true });
 
     // get params from url
     const paramCategory = await this.props.match.params.category;
+    this.props.getListNewsCategory(paramCategory)
 
     // request news by category
-    await axios
-      .get(urlHeadline + "&category=" + paramCategory)
-      .then((response) => {
-        this.setState({ listNews: response.data.articles, isLoading: false });
-      })
-      .catch((error) => {
-        this.setState({ isLoading: false });
-      });
+    // await axios
+    //   .get(urlHeadline + "&category=" + paramCategory)
+    //   .then((response) => {
+    //     this.setState({ listNews: response.data.articles, isLoading: false });
+    //   })
+    //   .catch((error) => {
+    //     this.setState({ isLoading: false });
+    //   });
   };
 
   render() {
+    console.warn("cek this props di home", this.props)
     // console.warn("cek props pada news", this.props);
     const is_login = JSON.parse(localStorage.getItem("is_login"));
-    const { listNews, isLoading } = this.state;
+    const { listNews, isLoading } = this.props.dataNews;
     const topHeadlines = listNews.filter((item) => {
       if (item.content !== null && item.image !== null) {
         return item;
@@ -131,10 +136,11 @@ class Home extends Component {
           <React.Fragment>
             <div>
               <Header
-                doSearch={(event) => this.handleInputChange(event)}
-                handleRouter={(el) => this.handleRequestCategoryNews(el)}
-                getNews={() => this.getNews()}
-                keyword={this.state.search}
+                doSearch={(event) => this.props.handleInputChange(event)}
+                // handleRouter={(el) => this.props.handleRequestCategoryNews(el)}
+                getNews={() => this.props.getListNews()}
+                keyword={this.props.dataNews.search}
+                getNewsCategory={(categoryName) => this.handleRequestCategoryNews(categoryName)}
                 placeholder="Tulis sesuatu"
                 {...this.props}
               />
@@ -176,12 +182,25 @@ class Home extends Component {
   }
 }
 
+const mapDispatchToProps = {
+
+  getListNews: getListNews,
+  handleInputChange: handleInputChange,
+  searchNews: searchNews,
+  getListNewsCategory: getListNewsCategory,
+
+
+}
+
 const mapStateToProps = (state) => {
   return {
     dataUser: state.user,
+    dataNews: state.news,
+    cekstate: state
+    
   }
 }
 
-export default connect(mapStateToProps) (Home);
+export default connect(mapStateToProps, mapDispatchToProps) (Home);
 
 

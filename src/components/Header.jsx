@@ -9,8 +9,8 @@ class HeaderUser extends React.Component {
   // function to change router by category news
   changeRouter = async (category) => {
     // condition when handleRouter undefined/not
-    if (this.props.handleRouter) {
-      this.props.handleRouter(category);
+    if (this.props.getNewsCategory) {
+      this.props.getNewsCategory(category);
     } else {
       // redirect pages to endpoint news-category
       await this.props.history.replace("/news-category/" + category);
@@ -23,7 +23,7 @@ class HeaderUser extends React.Component {
     const is_login = this.props.logout;
     console.warn("tes post signout", this.props)
     if (!is_login){
-      this.props.history.push("/home");
+      this.props.history.push("/");
     }
   };
 
@@ -31,12 +31,12 @@ class HeaderUser extends React.Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <a className="navbar-brand" href="/home">
+          <a className="navbar-brand">
             <img
               className="logo App-logo"
               src={require("../images/logo192.png")}
             />
-            <Link to="/home">KabarKabar</Link>
+            <Link to="/" onClick={() => this.props.getNews}>KabarKabar</Link>
           </a>
           <button
             className="navbar-toggler"

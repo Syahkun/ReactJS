@@ -4,10 +4,12 @@ import thunk from "redux-thunk";
 //import reducer
 // import newsReducer from "./reducer/newsReducer";
 import userReducer from "./reducer/userReducer";
+import newsReducer from "./reducer/newsReducer";
 
 const rootReducer = combineReducers({
     // news: newsReducer,
     user: userReducer,
+    news: newsReducer
 });
 
 // const store = createStore(rootReducer);

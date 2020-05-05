@@ -8,7 +8,7 @@ export const doLogin = (props) => {
         };
 
         await axios
-        .post("https://syahkun.free.beeceptor.com/login", bodyRequest)
+        .post("https://syahkun3.free.beeceptor.com/login", bodyRequest)
         .then(async (response) => {
             if (response.data.hasOwnProperty("api_key")) {
                 dispatch({ type: "SUCCESS_LOGIN", payload: response.data })
