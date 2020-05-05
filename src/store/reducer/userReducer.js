@@ -26,7 +26,7 @@ export default function userReducer(userState = initialState, action) {
             return {
                 is_login: false
             };
-            
+
         default:
             return userState;
     }

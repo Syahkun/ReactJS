@@ -12,6 +12,7 @@ export const doLogin = (props) => {
         .then(async (response) => {
             if (response.data.hasOwnProperty("api_key")) {
                 dispatch({ type: "SUCCESS_LOGIN", payload: response.data })
+                console.warn("cek response data",response.data.hasOwnProperty("rizal"))
             }
         })
         .catch(function (error) {
@@ -20,12 +21,7 @@ export const doLogin = (props) => {
     };
 };
 
-export const changeInputUser = (el) => {
-    return {
-        type: "CHANGE_INPUT_USER",
-        payload: el,
-    };
-};
+export const changeInputUser = (el) => {return {type: "CHANGE_INPUT_USER", payload: el, }};
 
 export const doLogout = (el) => {
     return {

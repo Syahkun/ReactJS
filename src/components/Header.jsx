@@ -21,6 +21,7 @@ class HeaderUser extends React.Component {
   postSignout = async () => {
     await this.props.doLogout();
     const is_login = this.props.logout;
+    console.warn("tes post signout", this.props)
     if (!is_login){
       this.props.history.push("/home");
     }
@@ -67,7 +68,7 @@ class HeaderUser extends React.Component {
                 value="business"
                 onClick={() => this.changeRouter("business")}
               >
-                <a className="nav-link" href="#">
+                <a className="nav-link">
                   Ekonomi
                 </a>
               </li>
@@ -83,14 +84,13 @@ class HeaderUser extends React.Component {
                 value="health"
                 onClick={() => this.changeRouter("health")}
               >
-                <a className="nav-link" href="#">
+                <a className="nav-link">
                   Kesehatan
                 </a>
               </li>
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="#"
                   id="navbarDropdown"
                   role="button"
                   data-toggle="dropdown"
@@ -140,7 +140,6 @@ class HeaderUser extends React.Component {
                   <li className="nav-item">
                     <Link
                       className="nav-link"
-                      href="#"
                       onClick={() => this.postSignout()}
                     >
                       Keluar
@@ -160,7 +159,7 @@ class HeaderUser extends React.Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link">
                       Daftar
                     </a>
                   </li>

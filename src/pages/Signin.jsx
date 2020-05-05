@@ -20,6 +20,7 @@ class SignIn extends Component {
   //function to do login
   postLogin = async () => {
     await this.props.doLogin();
+    console.warn("test post login", this.props)
     const is_login = this.props.login;
     if (is_login) {
       this.props.history.push("/profile");
