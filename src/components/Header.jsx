@@ -18,19 +18,19 @@ class HeaderUser extends React.Component {
   // function to do logout
   postSignout = () => {
     localStorage.removeItem("is_login");
-    this.props.history.push("/home");
+    this.props.history.push("/");
   };
 
   render() {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <a className="navbar-brand" href="/home">
+          <a className="navbar-brand" href="/">
             <img
               className="logo App-logo"
               src={require("../images/logo192.png")}
             />
-            <Link to="/home">KabarKabar</Link>
+            <Link to="/">KabarKabar</Link>
           </a>
           <button
             className="navbar-toggler"

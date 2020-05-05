@@ -7,8 +7,8 @@ import Berita from "../components/BeritaTerkini";
 import { Redirect } from "react-router-dom";
 
 //News Api
-const apiKey = "874c2936717449ac9fa8d4494e7fc947";
-const baseUrl = "https://newsapi.org/v2/";
+const apiKey = process.env.REACT_APP_API_KEY;
+const baseUrl = process.env.REACT_APP_BASE_URL;
 const urlLatestNews = baseUrl + "everything?q=bitcoin&apiKey=" + apiKey;
 const urlHeadline = baseUrl + "top-headlines?country=id&apiKey=" + apiKey;
 

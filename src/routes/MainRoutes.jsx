@@ -9,7 +9,7 @@ const MainRoutes = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/home" component={Home} />
+        <Route exact path="/" component={Home} />
         <Route exact path="/signin" component={SignIn} />
         {/* <Route exact path="/signin" component={Home} /> */}
         <Route exact path="/profile" component={Profile} />
