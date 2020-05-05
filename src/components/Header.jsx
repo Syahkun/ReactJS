@@ -30,7 +30,7 @@ class HeaderUser extends React.Component {
               className="logo App-logo"
               src={require("../images/logo192.png")}
             />
-            <Link to="/">KabarKabar</Link>
+            <Link to="/">KabarKabarBroBri</Link>
           </a>
           <button
             className="navbar-toggler"
